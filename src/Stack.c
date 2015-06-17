@@ -19,27 +19,23 @@ StackElement *stackElementCreate(int data){
 }
 
 void stackAdd(Stack *stack, StackElement *elem){
+  StackElement *prevElement = malloc(sizeof(StackElement));
+  prevElement = stack -> head;
+  
   if(stack -> head == NULL || stack -> tail == NULL)
     stack -> head = stack -> tail = elem;
-  
   else{
-    stack -> tail -> next = elem;
-    stack -> tail = elem;
+    stack -> head = elem;
+    stack -> head ->next = prevElement;
   }
+  
   stack -> length++;
-  printf("ad Stack length = %d\n", stack -> length);
 }
 
 StackElement *stackRemove(Stack *stack){
   StackElement *removedElement = malloc(sizeof(StackElement));
-  StackElement *stackElement = malloc(sizeof(StackElement));
-  
   removedElement = stack -> head ;
-  removedElement -> next = NULL;
   
-  // stackElement = stack -> head;
-  // stack -> head =  stack -> head -> next;
-  // printf("removedElement -> value = %d\n", removedElement -> data);
   if(stack -> head -> next == NULL){
     stack -> head = NULL;
     stack -> tail = NULL;
@@ -49,11 +45,7 @@ StackElement *stackRemove(Stack *stack){
   }
   
   free(removedElement);
-  // printf("stack -> head -> value = %d", stack -> head -> next-> data);
-  
-  // free(stackElement);
-  // printf("stack -> head -> value = %d\n", stack -> head -> data);
-  // printf("stack -> head -> value = %d\n", stack -> head -> data);
+
   stack -> length--;
   return removedElement;
 }
